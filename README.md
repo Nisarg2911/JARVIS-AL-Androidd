@@ -15,3 +15,6 @@ The GitHub Actions workflow builds a debug APK on pushes to `main` or via manual
 
 ## Limitations
 This starter is local-only for AI chat. Online search, always-listening wake word and phone automation are not implemented. Speech recognition offline availability depends on the Android speech provider and installed language packs. This is a developer preview; first build may expose dependency/API compatibility issues.
+
+
+Build trigger check: workflow should run on pushes to `main`.
