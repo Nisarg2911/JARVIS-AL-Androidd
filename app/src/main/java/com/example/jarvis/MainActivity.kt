@@ -207,6 +207,8 @@ class MainActivity : ComponentActivity(), TextToSpeech.OnInitListener {
                 appendLine("JARVIS", answer)
                 db.add("JARVIS", answer)
                 lastReply = answer
+                // Complete the voice conversation by speaking every AI response.
+                withContext(Dispatchers.Main) { speak(answer) }
             } catch (e: Exception) {
                 appendLine("SYSTEM", e.message ?: "Unable to generate a response.")
             }
@@ -229,7 +231,12 @@ class MainActivity : ComponentActivity(), TextToSpeech.OnInitListener {
     }
 
     private fun speakLast() {
-        if (lastReply.isNotBlank() && ttsReady) tts.speak(lastReply, TextToSpeech.QUEUE_FLUSH, null, "jarvis_reply")
+        if (lastReply.isNotBlank()) speak(lastReply)
+    }
+
+    private fun speak(text: String) {
+        if (!ttsReady || text.isBlank()) return
+        tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, "jarvis_reply")
     }
 
     override fun onInit(statusCode: Int) {
